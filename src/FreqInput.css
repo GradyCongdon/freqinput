@@ -1,0 +1,20 @@
+div {
+  border: 1px solid black;
+  width: 400px;
+  height: 100px;
+}
+
+.line {
+  width: 2px;
+  margin: 0;
+  background-color: black;
+  height: 99%;
+}
+
+.line label {
+  margin: 5px;
+  display: block;
+  position: absolute;
+  top: -26px;
+}
+
