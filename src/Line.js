@@ -3,6 +3,7 @@ import './Line.css';
 
 function Line(props) {
     const {line, setSelectedLine, selected, keyboard} = props;
+    if (!line) return null;
     const classNames = ["line", selected ? "selected" : ''].join(' ');
     const styles = {
       transform: `translateX(${line}px)`,
