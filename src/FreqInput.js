@@ -46,7 +46,7 @@ function FreqInput() {
     }
   };
   return (
-    <div id="freqInput" onMouseMove={moveLine}>
+    <div id="freqInput" onMouseMove={moveLine} onMouseDown={moveLine}>
       <div className="line" style={styles} key={line} data-freq={line}>
         <label>{line}</label>
       </div>
