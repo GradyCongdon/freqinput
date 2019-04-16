@@ -2,24 +2,24 @@ import React from 'react';
 import './Line.css';
 
 function Line(props) {
-    const {line, setSelectedLine, selected} = props;
-    const color = selected ? 'red' : 'black';
+    const {line, setSelectedLine, selected, keyboard} = props;
+    const classNames = ["line", selected ? "selected" : ''].join(' ');
     const styles = {
       transform: `translateX(${line}px)`,
-      color,
-      backgroundColor: color,
-      borderColor: color
     };
     return (
-     <div className="line" 
+     <div className={classNames}
           id={line} 
           onClick={setSelectedLine}
           style={styles} 
           data-freq={line}
+          keyboard={keyboard}
       >
-        <label>{line}</label>
+        <label className="freq">{line}</label>
+        <label className="keyboard">{keyboard}</label>
       </div>
     );
 }
+
 
 export default Line;

@@ -1,3 +1,4 @@
+
 .line {
   display: inline-block;
   width: 1px;
@@ -10,15 +11,30 @@
   cursor: pointer;
 }
 
+.selected {
+  color: red;
+  background-color: red;
+  border-color: red;
+}
+
 .line label {
   margin: 5px;
   display: block;
   position: absolute;
   border-radius: 100%;
   font-family: monospace;
+  text-align: center;
   padding: 2px;
+  background-color: white;
+}
+.freq {
   top: -29px;
   left: -6px;
   transform: rotate(-25deg);
-  background-color: white;
+}
+
+.keyboard {
+  top: 100px;
+  left: -10px;
+  transform: rotate(0);
 }
