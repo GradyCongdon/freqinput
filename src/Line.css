@@ -1,0 +1,24 @@
+.line {
+  display: inline-block;
+  width: 1px;
+  border: 4px blue;
+  margin: 0;
+  background-color: black;
+  height: 100px;
+  position: absolute;
+  z-index: 3;
+  cursor: pointer;
+}
+
+.line label {
+  margin: 5px;
+  display: block;
+  position: absolute;
+  border-radius: 100%;
+  font-family: monospace;
+  padding: 2px;
+  top: -29px;
+  left: -6px;
+  transform: rotate(-25deg);
+  background-color: white;
+}

@@ -1,29 +1,10 @@
 import React, {useState} from 'react';
+import Line from './Line';
 import './FreqInput.css';
 
-/*
-function FreqInput() {
-  const [lines, setLines] = useState([50]);
-  const lineElements = lines.map(line => {
-    console.log(line);
-    const styles = {
-      transform: `translateX(${line}px)`
-    };
-    return (<div className="line" style={styles} key={line} data-freq={line}>{line}</div>);
-  });
-  const setLine = (e) => {
-    const x = e.clientX;
-    lines.push(x)
-    setLines(lines);
-  };
-  return (
-    <div onClick={setLine}>
-      {lineElements}
-    </div>
-  );
-}
-*/
-const lineWidth = 2;
+const log = (...m) => console.log(...m);
+const $ = (sel) => document.querySelector(sel);
+
 const getRelativeMouse = (event, parent) => { 
   const box = parent.getBoundingClientRect();
   return {
@@ -33,23 +14,55 @@ const getRelativeMouse = (event, parent) => {
   }
 };
 
-function FreqInput() {
-  const [line, setLine] = useState(50);
-  const styles = {
-    transform: `translateX(${line}px)`
-  };
-  const moveLine = (e) => {
-    if (e.buttons === 1) {
-      const f = document.getElementById('freqInput');
+const getLineX = (e) => {
+      const f = $('#freqInput');
       let {left} = getRelativeMouse(e, f);
-      setLine(left - lineWidth);
+      let x = left - lineWidth;
+      return x;
+};
+
+const lineWidth = 9 / 2 + 1;
+function FreqInput() {
+  const [lines, setLines] = useState([50,100]);
+  const [selectedLine, setSelectedLine] = useState();
+  const [tempLine, setTempLine] = useState();
+
+  const moveLine = (e) => {
+    const x = (e.buttons === 1) ? getLineX(e) : null;
+    if (x) {
+      setTempLine(x);
     }
+  }
+  const placeLine = (e) => {
+      const x = getLineX(e);
+      if (x && !lines.includes(x) ) {
+        setLines([...lines, x]);
+        setTempLine(null);
+      }
+  }
+
+  const onSelectLine = (e) => {
+    log('wtf');
+  }
+  let selected = false;
+  const makeLine = (line, i) => {
+    if (!line) return;
+    const key = `${line}--${i}`;
+    return (<Line key={key} selected={selected} onSelectLine={onSelectLine} line={line}/>);
   };
+  const lineElements = lines.map(makeLine);
+  selected = true;
+  const tempLineElement = makeLine(tempLine);
   return (
-    <div id="freqInput" onMouseMove={moveLine} onMouseDown={moveLine}>
-      <div className="line" style={styles} key={line} data-freq={line}>
-        <label>{line}</label>
-      </div>
+    <div 
+      id="freqInput" 
+      className="freqInput" 
+      onMouseMove={moveLine} 
+      onMouseDown={moveLine}
+      onMouseUp={placeLine}
+    >
+      {lineElements}
+      {tempLineElement} 
     </div>
   );
 }
