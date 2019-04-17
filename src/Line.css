@@ -17,6 +17,13 @@
   border-color: red;
 }
 
+.up {
+  color: transparent;
+  background-color: transparent;
+  border-color: #ccc
+}
+
+
 .line label {
   margin: 5px;
   display: block;

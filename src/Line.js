@@ -2,9 +2,9 @@ import React from 'react';
 import './Line.css';
 
 function Line(props) {
-    const {line, setSelectedLine, selected, keyboard} = props;
+    const {line, setSelectedLine, status, keyboard} = props;
     if (!line) return null;
-    const classNames = ["line", selected ? "selected" : ''].join(' ');
+    const classNames = status.join(' ') + " line";
     const styles = {
       transform: `translateX(${line}px)`,
     };

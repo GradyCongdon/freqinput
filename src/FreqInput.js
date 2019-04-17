@@ -9,23 +9,38 @@ function FreqInput() {
   const [activeLine, setActiveLine] = useState();
   const [selectedKey, setSelectedKey] = useState();
 
-  const isSelectedMode = (e) => (e.buttons === 1 || selectedKey);
-
-  const moveLine = (e) => {
-    const x = (isSelectedMode(e)) ? getLineX(e) : null;
-    if (x) {
-      setActiveLine(x);
+  const addLine = (l, i) => {
+    if (!l || lines.includes(l) || lines.length + 1 > keys.length) return;
+    if (i) {
+      lines[i] = l;
+    } else {
+      lines.push(l);
     }
+    console.log(lines);
+    setLines(lines);
   }
 
-  const placeLine = (e) => {
-      const x = getLineX(e);
-      if (x && !lines.includes(x) ) {
-        setLines([...lines, x]);
-        setActiveLine(null);
-        setSelectedKey(null);
-      }
+  const isSelectMode = (e) => (e.buttons === 1 || selectedKey);
+
+  const upLine = (e) => {
+    const l = getLineX(e);
+    setActiveLine(l);
+  }; 
+
+  const downLine = (e) => {
+    const l = getLineX(e);
+    const i = selectedKey && keys.indexOf(selectedKey);
+    addLine(l, i);
+    setActiveLine(null);
+    setSelectedKey(null);
   };
+
+  const moveLine = (e) => {
+    if (!isSelectMode(e)) return;
+    const l = getLineX(e);
+    setActiveLine(l);
+  }
+
 
   const getKeyLine = (code) => {
     return lines[keys.indexOf(code)];
@@ -40,28 +55,28 @@ function FreqInput() {
     setSelectedKey(code);
     const selectedLine = getKeyLine(code);
     if (selectedLine) {
-      setLines(lines.filter(l => l !== selectedLine));
       setActiveLine(selectedLine);
     }
   }
   const keys = ['q','w','e','r','t','y','u','i','o','p'];
+  const nextKey = keys[lines.length];
   const Lines = lines.map((line, i) => {
     const k = keys[i]
-    return (<Line key={k} keyboard={k} line={line}/>)
+    const up = selectedKey === k ? 'up' : '';
+    return (<Line key={line} keyboard={k} status={[up]} line={line}/>)
   });
-  const ActiveLine = (<Line key="active" selected="true" line={activeLine}/>);
+
   return (
     <div 
-      id="freqInput" 
       className="freqInput" 
       onMouseMove={moveLine} 
-      onMouseDown={moveLine}
-      onMouseUp={placeLine}
+      onMouseUp={downLine}
+      onMouseDown={upLine}
       onKeyDown={selectLine}
       tabIndex="0"
     >
       {Lines}
-      {ActiveLine}
+      {<Line key="active" keyboard={selectedKey || nextKey} status={['selected']} line={activeLine}/>}
     </div>
   );
 }
