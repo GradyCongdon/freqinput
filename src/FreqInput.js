@@ -1,13 +1,15 @@
 import React, { useState } from 'react';
 import { getLineX } from './events';
 import { log } from './util';
+import FreqButton from './FreqButton';
 import Line from './Line';
 import './FreqInput.css';
 
-function FreqInput() {
+function FreqInput(props) {
   const [lines, setLines] = useState([]);
   const [activeLine, setActiveLine] = useState();
   const [selectedKey, setSelectedKey] = useState();
+
 
   const keys = ['q','w','e','r','t','y','u','i','o','p'];
   const nextKey = keys[lines.length];
@@ -16,25 +18,15 @@ function FreqInput() {
 
   const addLine = (l, loc) => {
     if (!l || lines.includes(l) || lines.length + 1 > keys.length) return;
+    const newlines = [...lines]
     if (loc && typeof loc === 'number') {
-      lines[loc] = l;
+      newlines[loc] = l;
     } else if (loc && typeof loc === 'string') {
-      lines[getKeyIndex(loc)] = l;
+      newlines[getKeyIndex(loc)] = l;
     } else {
-      lines.push(l);
+      newlines.push(l);
     }
-    log('add', lines);
-    setLines(lines);
-  }
-
-  const removeLine = (loc) => {
-    if (loc && typeof loc === 'number') {
-      lines[loc] = null;
-    } else if (loc && typeof loc === 'string') {
-      lines[getKeyIndex(loc)] = null;
-    }
-    const newlines = lines.filter(l => l);
-    log('remove', loc, newlines);
+    log('add', newlines);
     setLines(newlines);
   }
 
@@ -42,8 +34,7 @@ function FreqInput() {
   const downLine = (e) => {
     log('down');
     const l = getLineX(e);
-    const i = selectedKey && keys.indexOf(selectedKey);
-    addLine(l, i);
+    addLine(l, selectedKey);
     setActiveLine(null);
     setSelectedKey(null);
   };
@@ -62,14 +53,19 @@ function FreqInput() {
       return;
    }
     setSelectedKey(code);
-    const selectedLine = getKeyLine(code);
-    if (selectedLine) {
-      addLine(activeLine, code);
-      setActiveLine(selectedLine);
-    }
+    setActiveLine(activeLine); // set to "mouse" pos
   }
 
-  document.addEventListener('keydown', selectLine.bind(this));
+  const focus = (e) => {
+    log('focus');
+    e.currentTarget.focus();
+  };
+
+  const sortLines = () => {
+    const newlines = [...lines];
+    newlines.sort((a,b) => a - b);
+    setLines(newlines);
+  }
 
 
   const Lines = lines.map((line, i) => {
@@ -78,16 +74,26 @@ function FreqInput() {
     return (<Line key={line} keyboard={k} status={[up]} line={line}/>)
   });
 
+  const full = (lines.length === keys.length && !selectedKey) ? 'full' : '';
+
+
   return (
-    <div 
-      className="freqInput" 
-      onMouseMove={moveLine} 
-      onMouseUp={downLine}
-    >
-      {Lines}
-      {<Line key="active" keyboard={selectedKey || nextKey} status={['selected']} line={activeLine}/>}
-    </div>
+    <section> 
+      <div 
+        className={['freqInput', full].join(' ')}
+        onMouseMove={moveLine} 
+        onMouseOver={focus}
+        onMouseUp={downLine}
+        onKeyDown={selectLine}
+        tabIndex="0"
+      >
+        {props.keydown}
+        {Lines}
+        {!full && <Line key="active" keyboard={selectedKey || nextKey} status={['selected']} line={activeLine}/>} </div>
+      <FreqButton onClick={sortLines}>sort</FreqButton>
+    </section>
   );
 }
+
 
 export default FreqInput;

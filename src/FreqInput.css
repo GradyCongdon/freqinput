@@ -9,9 +9,26 @@
 .freqInput:hover {
   cursor: none;
 }
+.freqInput.full:hover {
+  cursor: default;
+}
 
 .freqInput:hover .line.selected {
   display: inline-block;
 }
 
+section {
+  display: flex;
+  flex-direction: column;
 
+  justify-content: center;
+  align-items: flex-end;
+}
+
+section .freqInput {
+  margin-bottom: 20px;
+}
+
+.freqInput + button {
+  margin: 5px;
+}
