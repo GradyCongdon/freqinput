@@ -1,33 +1,46 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import { getLineX } from './events';
 import { log } from './util';
 import Line from './Line';
 import './FreqInput.css';
 
 function FreqInput() {
-  const [lines, setLines] = useState([50,100]);
+  const [lines, setLines] = useState([]);
   const [activeLine, setActiveLine] = useState();
   const [selectedKey, setSelectedKey] = useState();
 
-  const addLine = (l, i) => {
+  const keys = ['q','w','e','r','t','y','u','i','o','p'];
+  const nextKey = keys[lines.length];
+  const getKeyIndex = (code) => keys.indexOf(code);
+  const getKeyLine = (code) => lines[keys.indexOf(code)];
+
+  const addLine = (l, loc) => {
     if (!l || lines.includes(l) || lines.length + 1 > keys.length) return;
-    if (i) {
-      lines[i] = l;
+    if (loc && typeof loc === 'number') {
+      lines[loc] = l;
+    } else if (loc && typeof loc === 'string') {
+      lines[getKeyIndex(loc)] = l;
     } else {
       lines.push(l);
     }
-    console.log(lines);
+    log('add', lines);
     setLines(lines);
   }
 
-  const isSelectMode = (e) => (e.buttons === 1 || selectedKey);
+  const removeLine = (loc) => {
+    if (loc && typeof loc === 'number') {
+      lines[loc] = null;
+    } else if (loc && typeof loc === 'string') {
+      lines[getKeyIndex(loc)] = null;
+    }
+    const newlines = lines.filter(l => l);
+    log('remove', loc, newlines);
+    setLines(newlines);
+  }
 
-  const upLine = (e) => {
-    const l = getLineX(e);
-    setActiveLine(l);
-  }; 
 
   const downLine = (e) => {
+    log('down');
     const l = getLineX(e);
     const i = selectedKey && keys.indexOf(selectedKey);
     addLine(l, i);
@@ -36,30 +49,29 @@ function FreqInput() {
   };
 
   const moveLine = (e) => {
-    if (!isSelectMode(e)) return;
     const l = getLineX(e);
     setActiveLine(l);
   }
 
-
-  const getKeyLine = (code) => {
-    return lines[keys.indexOf(code)];
-  }
-
   const selectLine = (e) => {
     const { key:code } = e;
-    if (selectedKey === code) {
+    log('select', code);
+    if ( (!selectedKey && selectedKey === code) || !keys.includes(code)) {
+      setActiveLine(null);
       setSelectedKey(null);
       return;
    }
     setSelectedKey(code);
     const selectedLine = getKeyLine(code);
     if (selectedLine) {
+      addLine(activeLine, code);
       setActiveLine(selectedLine);
     }
   }
-  const keys = ['q','w','e','r','t','y','u','i','o','p'];
-  const nextKey = keys[lines.length];
+
+  document.addEventListener('keydown', selectLine.bind(this));
+
+
   const Lines = lines.map((line, i) => {
     const k = keys[i]
     const up = selectedKey === k ? 'up' : '';
@@ -71,9 +83,6 @@ function FreqInput() {
       className="freqInput" 
       onMouseMove={moveLine} 
       onMouseUp={downLine}
-      onMouseDown={upLine}
-      onKeyDown={selectLine}
-      tabIndex="0"
     >
       {Lines}
       {<Line key="active" keyboard={selectedKey || nextKey} status={['selected']} line={activeLine}/>}

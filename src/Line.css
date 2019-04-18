@@ -8,10 +8,10 @@
   height: 100px;
   position: absolute;
   z-index: 3;
-  cursor: pointer;
 }
 
 .selected {
+  display: none;
   color: red;
   background-color: red;
   border-color: red;
@@ -42,6 +42,6 @@
 
 .keyboard {
   top: 100px;
-  left: -10px;
+  left: -11px;
   transform: rotate(0);
 }

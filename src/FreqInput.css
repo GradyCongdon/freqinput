@@ -3,6 +3,15 @@
   width: 400px;
   height: 100px;
   user-select: none;
+  outline: 1px solid red;
+}
+
+.freqInput:hover {
+  cursor: none;
+}
+
+.freqInput:hover .line.selected {
+  display: inline-block;
 }
 
 
