@@ -2,7 +2,6 @@
 .line {
   display: inline-block;
   width: 1px;
-  border: 4px blue;
   margin: 0;
   background-color: black;
   height: 100px;
@@ -10,11 +9,20 @@
   z-index: 3;
 }
 
+.line:hover,
 .selected {
   display: none;
   color: red;
   background-color: red;
   border-color: red;
+}
+
+.line:hover {
+  display: block;
+}
+
+.edit:hover {
+  cursor:pointer;
 }
 
 .up {
@@ -42,6 +50,7 @@
 
 .keyboard {
   top: 100px;
-  left: -11px;
+  left: -10px;
   transform: rotate(0);
 }
+
