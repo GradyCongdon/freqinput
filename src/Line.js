@@ -3,7 +3,7 @@ import './Line.css';
 
 function Line(props) {
     const {line, setSelectedLine, status, keyboard} = props;
-    if (!line) return null;
+    if (line == undefined) return null; // Line can be 0
     const classNames = status.join(' ') + " line";
     const styles = {
       transform: `translateX(${line}px)`,

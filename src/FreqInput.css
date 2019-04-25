@@ -1,10 +1,20 @@
 .freqInput {
-  border: 1px solid black;
   width: 400px;
   height: 100px;
+  padding: 10px 25px;
   user-select: none;
-  outline: 1px solid red;
+  outline: none;
+  position: relative;
 }
+.border {
+  width: 400px;
+  height: 100px;
+  border: 1px solid black;
+  position: absolute;
+  top: 8px;
+  pointer-events: none;
+}
+
 
 .freqInput:hover {
   cursor: none;

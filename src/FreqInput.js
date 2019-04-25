@@ -16,8 +16,12 @@ function FreqInput(props) {
   const getKeyIndex = (code) => keys.indexOf(code);
   const getKeyLine = (code) => lines[keys.indexOf(code)];
 
+  const isFull = () => lines.length + 1 > keys.length;
+  const isReplacementLine = () => activeLine && selectedKey;
+
   const addLine = (l, loc) => {
-    if (!l || lines.includes(l) || lines.length + 1 > keys.length) return;
+    if (1 == undefined || lines.includes(l)) return;
+    if (isFull() && !isReplacementLine() ) return;
     const newlines = [...lines]
     if (loc && typeof loc === 'number') {
       newlines[loc] = l;
@@ -29,24 +33,27 @@ function FreqInput(props) {
     log('add', newlines);
     setLines(newlines);
   }
+  const lineOptions = {
+    min: 0,
+    max: 400,
+    offset: -25,
+  }
 
 
   const downLine = (e) => {
-    log('down');
-    const l = getLineX(e);
+    const l = getLineX(e, lineOptions);
     addLine(l, selectedKey);
     setActiveLine(null);
     setSelectedKey(null);
   };
 
   const moveLine = (e) => {
-    const l = getLineX(e);
+    const l = getLineX(e, lineOptions);
     setActiveLine(l);
   }
 
   const selectLine = (e) => {
     const { key:code } = e;
-    log('select', code);
     if ( (!selectedKey && selectedKey === code) || !keys.includes(code)) {
       setActiveLine(null);
       setSelectedKey(null);
@@ -57,7 +64,6 @@ function FreqInput(props) {
   }
 
   const focus = (e) => {
-    log('focus');
     e.currentTarget.focus();
   };
 
@@ -87,9 +93,10 @@ function FreqInput(props) {
         onKeyDown={selectLine}
         tabIndex="0"
       >
-        {props.keydown}
-        {Lines}
-        {!full && <Line key="active" keyboard={selectedKey || nextKey} status={['selected']} line={activeLine}/>} </div>
+      <div className="border"></div>
+      {props.keydown}
+      {Lines}
+      {!full && <Line key="active" keyboard={selectedKey || nextKey} status={['selected']} line={activeLine}/>} </div>
       <FreqButton onClick={sortLines}>sort</FreqButton>
     </section>
   );
