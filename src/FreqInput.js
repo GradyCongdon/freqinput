@@ -116,7 +116,7 @@ function FreqInput() {
   );
 
   return (
-    <section> 
+    <section className="chunk"> 
       <div 
         className={['freqInput', full, mode].join(' ')}
         onMouseMove={mode === PLACE ? moveLine : null} 
@@ -129,8 +129,10 @@ function FreqInput() {
         {Lines}
         {ActiveLine}
       </div>
-      <FreqButton onClick={sortLines}>sort</FreqButton>
-      <FreqButton onClick={toggleMode}>{mode === PLACE ? 'edit' : 'place'}</FreqButton>
+      <section className="buttons">
+        <FreqButton onClick={sortLines}>sort</FreqButton>
+        <FreqButton onClick={toggleMode}>{mode === PLACE ? 'edit' : 'place'}</FreqButton>
+      </section>
     </section>
   );
 }

@@ -22,16 +22,24 @@
   display: inline-block;
 }
 
-section {
+.chunk{
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: flex-end;
 }
 
-.freqInput + button {
-  margin: 5px;
+.freqInput + .buttons {
   margin-top: 30px;
+}
+.buttons {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+button {
+  margin: 5px;
 }
 
 .border {
