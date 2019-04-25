@@ -1,13 +1,13 @@
 {
-  "main.css": "/freqinput/static/css/main.81da94b6.chunk.css",
-  "main.js": "/freqinput/static/js/main.f185ba8b.chunk.js",
-  "main.js.map": "/freqinput/static/js/main.f185ba8b.chunk.js.map",
+  "main.css": "/freqinput/static/css/main.70d088be.chunk.css",
+  "main.js": "/freqinput/static/js/main.8a4821bd.chunk.js",
+  "main.js.map": "/freqinput/static/js/main.8a4821bd.chunk.js.map",
   "runtime~main.js": "/freqinput/static/js/runtime~main.8d8dbe2b.js",
   "runtime~main.js.map": "/freqinput/static/js/runtime~main.8d8dbe2b.js.map",
   "static/js/2.b62a2150.chunk.js": "/freqinput/static/js/2.b62a2150.chunk.js",
   "static/js/2.b62a2150.chunk.js.map": "/freqinput/static/js/2.b62a2150.chunk.js.map",
   "index.html": "/freqinput/index.html",
-  "precache-manifest.1bb5c51acda37f79446096eb79a4dd84.js": "/freqinput/precache-manifest.1bb5c51acda37f79446096eb79a4dd84.js",
+  "precache-manifest.c80fe67722446c4a9f7e772b8dda2fa7.js": "/freqinput/precache-manifest.c80fe67722446c4a9f7e772b8dda2fa7.js",
   "service-worker.js": "/freqinput/service-worker.js",
-  "static/css/main.81da94b6.chunk.css.map": "/freqinput/static/css/main.81da94b6.chunk.css.map"
+  "static/css/main.70d088be.chunk.css.map": "/freqinput/static/css/main.70d088be.chunk.css.map"
 }

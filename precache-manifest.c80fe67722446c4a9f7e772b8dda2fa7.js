@@ -4,19 +4,19 @@ self.__precacheManifest = [
     "url": "/freqinput/static/js/runtime~main.8d8dbe2b.js"
   },
   {
-    "revision": "8d4d7a45706e27edbc3c",
-    "url": "/freqinput/static/js/main.f185ba8b.chunk.js"
+    "revision": "c0fa66977d074ec9aca6",
+    "url": "/freqinput/static/js/main.8a4821bd.chunk.js"
   },
   {
     "revision": "3fddd0e8d1645f0b8b5c",
     "url": "/freqinput/static/js/2.b62a2150.chunk.js"
   },
   {
-    "revision": "8d4d7a45706e27edbc3c",
-    "url": "/freqinput/static/css/main.81da94b6.chunk.css"
+    "revision": "c0fa66977d074ec9aca6",
+    "url": "/freqinput/static/css/main.70d088be.chunk.css"
   },
   {
-    "revision": "cb5673908f31444262391ffc0c7f32fd",
+    "revision": "11b244e41c5bdccfe67ff9d5d7d19c40",
     "url": "/freqinput/index.html"
   }
 ];
